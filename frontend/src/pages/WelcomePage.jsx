@@ -1,21 +1,13 @@
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
-const WelcomePage = () => {
-  const navigate = useNavigate();
-
-  return (
-    <div className="flex flex-col items-center justify-center h-screen bg-gradient-to-r from-purple-500 to-indigo-600 text-white">
-      <h1 className="text-5xl font-bold mb-6 animate-fade-in">Bienvenido a la Plataforma Cultural</h1>
-      <p className="text-lg mb-8">Explora videos culturales adaptados para todos.</p>
-      <button
-        onClick={() => navigate('/home')}
-        className="px-8 py-4 bg-white text-purple-600 font-semibold rounded-lg shadow-lg hover:bg-gray-200 transition-transform transform hover:scale-105"
-      >
-        Entrar
-      </button>
-    </div>
-  );
-};
+const WelcomePage = () => (
+  <div className="min-h-screen flex flex-col items-center justify-center bg-purple-100">
+    <h1 className="text-4xl font-bold mb-6 text-purple-700">Bienvenido a Plataforma Cultural</h1>
+    <Link to="/login" className="bg-purple-600 text-white px-6 py-3 rounded-lg hover:bg-purple-700 transition">
+      Iniciar Sesión
+    </Link>
+  </div>
+);
 
 export default WelcomePage;

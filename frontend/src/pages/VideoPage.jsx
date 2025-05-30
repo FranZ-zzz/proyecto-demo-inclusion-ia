@@ -1,11 +1,26 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import SubtitleGenerator from '../components/SubtitleGenerator';
+import axios from 'axios';
 
 const VideoPage = () => {
   const { videoId } = useParams();
   const navigate = useNavigate();
   const [subtitles, setSubtitles] = useState('');
+
+  useEffect(() => {
+    const fetchSubtitles = async () => {
+      try {
+        const response = await axios.get(`http://localhost:5000/get-subtitles?videoId=${videoId}`);
+        const transcript = response.data.map((item) => item.text).join(' ');
+        setSubtitles(transcript);
+      } catch (error) {
+        console.error('Error al obtener los subtítulos:', error);
+        setSubtitles('No se pudieron cargar los subtítulos.');
+      }
+    };
+
+    fetchSubtitles();
+  }, [videoId]);
 
   return (
     <div className="min-h-screen bg-gray-100">
@@ -32,7 +47,6 @@ const VideoPage = () => {
         </div>
         <div className="flex-1 bg-white p-4 rounded-lg shadow-md">
           <h2 className="text-xl font-bold mb-4">Subtítulos Generados</h2>
-          <SubtitleGenerator setSubtitles={setSubtitles} />
           <div className="mt-4">
             <p className="text-gray-700">{subtitles || 'Cargando subtítulos...'}</p>
           </div>
